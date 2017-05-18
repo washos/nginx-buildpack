@@ -1,3 +1,10 @@
+## v0.6
+
+2017-05-18
+
+* Update zlib to 1.2.11
+* Add support for heroku-16
+
 ## v0.5
 
 2017-01-05

@@ -8,8 +8,16 @@ Some application servers (e.g. Ruby's Unicorn) halt progress when dealing with n
 
 ## Versions
 
-* Buildpack Version: 0.5
-* NGINX Version: 1.11.8
+* Buildpack Version: 0.6
+* NGINX version: 1.11.8
+* PCRE version: 8.39
+* zlib version: 1.2.11
+* OpenSSL version: 1.0.2j
+
+## Supported Heroku stacks
+
+* `cedar-14`
+* `heroku-16`
 
 ## Requirements
 
@@ -181,6 +189,32 @@ Visit app
 
 ```
 $ heroku open
+```
+
+## Compilation
+
+### `cedar-14`
+
+```
+[local ] $ docker run -i -t heroku/cedar:14 /bin/bash
+[local ] $ docker ps
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+<container_id>      heroku/cedar:14     "/bin/bash"         7 seconds ago       Up 5 seconds                            jolly_bardeen
+[local ] $ docker cp scripts/build_nginx.sh <container_id>:/tmp/build_nginx.sh
+[docker] # sh /tmp/build_nginx.sh
+[local ] $ docker cp <container_id>:/tmp/nginx/sbin/nginx bin/nginx-cedar-14
+```
+
+### `heroku-16`
+
+```
+[local ] $ docker run -i -t heroku/heroku:16-build /bin/bash
+[local ] $ docker ps
+CONTAINER ID        IMAGE                    COMMAND             CREATED             STATUS              PORTS               NAMES
+<container_id>      heroku/heroku:16-build   "/bin/bash"         4 seconds ago       Up 3 seconds                            pedantic_yalow
+[local ] $ docker cp scripts/build_nginx.sh <container_id>:/tmp/build_nginx.sh
+[docker] # sh /tmp/build_nginx.sh
+[local ] $ docker cp <container_id>:/tmp/nginx/sbin/nginx bin/nginx-heroku-16
 ```
 
 ## License

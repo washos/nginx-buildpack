@@ -11,7 +11,7 @@
 
 NGINX_VERSION=${NGINX_VERSION-1.11.8}
 PCRE_VERSION=${PCRE_VERSION-8.39}
-ZLIB_VERSION=${ZLIB_VERSION-1.2.10}
+ZLIB_VERSION=${ZLIB_VERSION-1.2.11}
 OPENSSL_VERSION=${OPENSSL_VERSION-1.0.2j}
 
 nginx_tarball_url=http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz
@@ -20,13 +20,7 @@ zlib_tarball_url=http://zlib.net/zlib-${ZLIB_VERSION}.tar.gz
 openssl_tarball_url=http://www.openssl.org/source/openssl-${OPENSSL_VERSION}.tar.gz
 
 temp_dir=$(mktemp -d /tmp/nginx.XXXXXXXXXX)
-
-echo "Serving files from /tmp on $PORT"
-cd /tmp
-python -m SimpleHTTPServer $PORT &
-
 cd ${temp_dir}
-echo "Temp dir: $temp_dir"
 
 echo "Downloading $nginx_tarball_url"
 curl -L ${nginx_tarball_url} | tar -xz
@@ -49,9 +43,3 @@ echo "Downloading $openssl_tarball_url"
         --with-http_ssl_module
 	make install
 )
-
-while true
-do
-	sleep 1
-	echo "."
-done
